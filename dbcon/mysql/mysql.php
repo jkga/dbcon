@@ -2,7 +2,7 @@
 
 namespace DBCon\MySQL;
 
-include_once("../dbcon.php");
+include_once(dirname(__DIR__)."../../dbcon.php");
 
 use DBCon\dbms as dbms;
 
