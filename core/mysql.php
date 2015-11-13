@@ -45,13 +45,10 @@ class database extends Dbcon\dbms{
 
 	}
 
-
 	
 	function close(){
 		$this->pdo=null;
 	}
-
-
 
 
 	function get_description(){
@@ -59,27 +56,11 @@ class database extends Dbcon\dbms{
 		return $this->description;
 	}
 
-
 	function get_version(){
 		return self::VERSION;
 	}
 
 
-
 }
 
-?>
-
-<?php 
-$database=['host'=>'192.168.15.54',
-			'username'=>'access_all',
-			'password'=>'',
-			'port'=>'',
-			'dbms'=>'mysql',
-			'dbname'=>'atr_db'
-		];
-#setup db connection
-$db=new database($database['dbms'],$database['host'],$database['username'],$database['password'],$database['dbname']);
-
-var_dump($db->open());
 ?>
