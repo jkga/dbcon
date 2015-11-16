@@ -27,8 +27,6 @@ class mysqlTest extends \PHPUnit_Framework_TestCase
 	public function testConnectToMYSQLUsingPDO(){
 		
 		
-		#setup sql and open connection to mysql server
-		$sql="SELECT count(*) as total FROM profile LIMIT 1";
 		$sth=$this->db->open();
 		#type must be PDO
 		$type=gettype($sth);
