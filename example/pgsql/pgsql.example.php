@@ -7,10 +7,10 @@ $database=['host'=>'localhost',
 			'dbms'=>'pgsql',
 			'dbname'=>'test'
 		];
-use \DBCon\MySQL\mysql as MySQL;
+use \DBCon\pgSQL\pgsql as pgSQL;
 
 #setup db connection credential
-$db=new MySQL($database['dbms'],$database['host'],$database['username'],$database['password'],$database['dbname']);
+$db=new pgSQL($database['dbms'],$database['host'],$database['username'],$database['password'],$database['dbname']);
 
 #setup sql and open connection to mysql server
 $sql="SELECT * FROM profile";
