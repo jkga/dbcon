@@ -31,7 +31,7 @@ For small projects and simple application, you may wish to use native function t
 ## How to use
 Download the zip file to your computer and  extract to the root directory of your server.
 Below is an excerpt script from *example/mysql/mysql.example.php* file to connect to **MySQL**.
-Example database connection scripts are located in example folder for your reference.
+Example database connection scripts are located in /example folder for your reference.
 
 
 ```php
@@ -118,5 +118,5 @@ You can find the PHPUnit tests in dbconUnitTesting folder
 
 ## License
 
-This software is under the MIT liscense.Please read LISCENSE for information on the software availability and description.
+This software is under the MIT liscense.Please read LICENSE for information on the software availability and description.
 
