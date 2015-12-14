@@ -1,27 +1,25 @@
 <?php 
 
-namespace DBCon\MySQL;
+namespace DBCon\MySQLi;
 
 include_once(dirname(__DIR__)."../../dbcon.php");
 
 use DBCon\dbms as dbms;
 
-class mysql extends dbms{
+class mysqli extends dbms{
 
-	const DESCRIPTION=" connect apps to mysql";
-	const VERSION="5.3";
-	protected $pdo='s';
-	protected $db_ini_dbms=null;
+	const DESCRIPTION=" connect apps using mysqli";
+	const VERSION="5.xx";
+	protected $connection=null;
 	protected $db_ini_host=null;
 	private $db_ini_username=null;
 	private $db_ini_password=null;
 	private $db_ini_dbname=null;
 	private $db_ini_port=null;
 
-	function __construct($db_ini_dbms,$db_ini_host,$db_ini_username,$db_ini_password=NULL,$db_ini_dbname='',$db_ini_port=''){
+	function __construct($db_ini_host,$db_ini_username,$db_ini_password=NULL,$db_ini_dbname='',$db_ini_port=''){
  		
  		#initialize variables
- 		$this->db_ini_dbms=$db_ini_dbms;
 		$this->db_ini_host=$db_ini_host;
 		$this->db_ini_username=$db_ini_username;
 		$this->db_ini_password=$db_ini_password;
@@ -35,19 +33,23 @@ class mysql extends dbms{
 
 	 	#connect to mysql dbms
 	 	try{
-	
-	 		$this->pdo=new \PDO($this->db_ini_dbms.':host='.$this->db_ini_host.((!empty($this->db_ini_port)) ? (';port=' . $this->db_ini_port) : '').';dbname='.$this->db_ini_dbname,$this->db_ini_username,$this->db_ini_password);
+
+	 		mysqli_report(MYSQLI_REPORT_STRICT);
+
+	 		$this->connection=new \mysqli($this->db_ini_host,$this->db_ini_username,$this->db_ini_password,$this->db_ini_dbname);
+	 		#hard check if dbms connects to specific port
+	 		if($this->db_ini_port!='') $this->connection=new \mysqli($this->db_ini_host,$this->db_ini_username,$this->db_ini_password,$this->db_ini_dbname,$this->db_ini_port);
 	 			
 	 	}catch(Exception $e){ echo "error has occured.Please try to refresh the page"; }
 
- 		return $this->pdo;
+ 		return $this->connection;
 
 
 	}
 
 	
 	function close(){
-		$this->pdo=null;
+		$this->connection=null;
 	}
 
 
@@ -62,5 +64,7 @@ class mysql extends dbms{
 
 
 }
+
+
 
 ?>
