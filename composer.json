@@ -1,0 +1,13 @@
+{
+    "name": "jkga/dbcon",
+    "description": "A PHP API to connect to different RDBMS and NoSQL",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "kenneth",
+            "email": "johnkennethgibasabella@gmail.com"
+        }
+    ],
+    "minimum-stability": "alpha",
+    "require": {}
+}
