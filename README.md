@@ -10,11 +10,11 @@ You would need these if you need to define multiple database connection on a sin
 - cleaner code during development
 - configure multiple **different** database connection
 - easier to maintain
-- extensible (can define your own extension.Please see **Extending** section)
+- modular (can define your own extension.Please see **Extending** section)
 
 
 ### Note
-For small projects and simple application, you may wish to use native function to connect and manage your database.It is advisable only to use dbcon for large projects in such maintainability and productivity are tedious tasks. 
+For small projects and simple application, use native functions to connect and manage your databases.It is advisable only to use dbcon for large projects in such maintainability and productivity are tedious tasks. 
 
 
 ## Requirements
@@ -65,14 +65,77 @@ Example database connection scripts are located in /example folder for your refe
 		
  ?>
 ```  
+<br/>
+You may also configure your settings to shift or use different DBMS without affecting the rest of your codes. Doing so will allow applications to sync their data by reading and writing it on different databases.
+<br/><br/>
+Database Configuration
+```php
+<?php 
+	#config.php
+	#configuration settings
+	#autoload class
+	require_once('/path/to/vendor/autoload.php');
+	
+	#database configuration
+	$database_mysql=['host'=>'localhost',
+				'username'=>'root',
+				'password'=>'',
+				'port'=>'',
+				'dbms'=>'mysql',
+				'dbname'=>'your_database'
+			];
+
+	$database_pgsql=['host'=>'localhost',
+			'username'=>'postgres',
+			'password'=>'root',
+			'port'=>'5432',
+			'dbms'=>'pgsql',
+			'dbname'=>'test'
+		];
+
+
+	#class mysql ang pgsql
+	use \DBCon\MySQL\mysql as MySQL;
+	use \DBCon\pgSQL\pgsql as pgSQL;
+
+	/*setup database connection
+	 this will remain closed unless explicitly called by '->open()' function */
+	 
+	$main_database=new MySQL($database_mysql['dbms'],$database_mysql['host'],$database_mysql['username'],$database_mysql['password'],$database_mysql['dbname']);
+	$for_statistics_purpose=new pgSQL($database_pgsql['dbms'],$database_pgsql['host'],$database_pgsql['username'],$database_pgsql['password'],$database_pgsql['dbname']);
+
+		
+ ?>
+```  
+<br/>
+Page containing CRUD function
+```php
+<?php 
+	#your page.php
+	#autoload class
+	require_once('/path/to/your/config.php');
+	
+	#Use this statement to open the connection configured on your configuration
+	#open connection to mysql
+	//main database
+	$sth=$main_database->open();
+	#or open connection to pgsql
+	//backup database
+	$sth=$for_statistics_purpose->open();
+
+	
+		
+ ?>
+```  
+<br/>
 
 ##Extending
-Developer can create their own extension by extending defined class to dbms under the namespace DBCon\MySQL and to make cleaner extension
+Developer can create their own module by extending defined class to dbms under the namespace DBCon\dbms and to make cleaner extension
 add your defined class on dbcon/your_namespace/your_extension_class
 
 Example. dbcon/pgsql/pgsql.php
 
-[^ Note: You may use the dbcon_development branch as the core and create a branch with **"dbcon_dev_"** prefix.].
+###### Note: You may use the dbcon_development branch as the core and create a branch with **"dbcon_dev_"** prefix.].
 
 ```php
 <?php 
@@ -108,7 +171,25 @@ class pgsql extends dbms{
 
 ``` 
 
+##Removing unwanted module
 
+Developer A and Developer B conversation
+
+Do you need mysql?		
+
+						I have mysql module
+Do you need pgsql?		
+
+						Nope! i dont use it and i need a smaller footprint
+
+Fine i will remove pgsql folder :) 
+	 
+
+						wait! i need mongoDB
+
+**SOLUTION: Then Create Module <3**
+
+<br/>
 
 ##Test
 
